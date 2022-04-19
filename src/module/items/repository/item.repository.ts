@@ -30,7 +30,8 @@ export class ItemRepository {
         const valuesPlaceholder = columnValues.map((_, i: number) => `$${i + 1}`).join(', ');
         const columnNames = Object.keys(columns).map((columnName: string) => `${columnName}`).join(', ');
 
-        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE wallet_id = ${columns['wallet_id']}::varchar`;
+        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE wallet_id LIKE '%${columns['wallet_id']}%'`;
+        console.log(sql)
         let result = await this.connection.sqlQuery(sql, columnValues)
     }
 
@@ -41,7 +42,7 @@ export class ItemRepository {
         let result = await this.connection.sqlQuery(
             `SELECT *
             FROM items
-            WHERE creator = ${wallet_id}::varchar`);
+            WHERE creator LIKE '%${wallet_id}%'`);
 
         return <Item[]>result;
     }

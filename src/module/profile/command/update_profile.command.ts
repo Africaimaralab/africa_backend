@@ -15,7 +15,6 @@ export class UpdateProfileCommand extends Command {
             let user = await authMiddleware(req);
             let profile: Profile = req.body;
             profile.wallet_id = user.wallet_id;
-            console.log(profile)
             await profileRepository.updateProfile(profile);
             return await profileRepository.getProfile(profile.wallet_id);
         } catch (err) {

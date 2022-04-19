@@ -23,7 +23,7 @@ export class CollectionRepository {
         const valuesPlaceholder = columnValues.map((_, i: number) => `$${i + 1}`).join(', ');
         const columnNames = Object.keys(columns).map((columnName: string) => `${columnName}`).join(', ');
 
-        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE wallet_id = ${columns['wallet_id']}::varchar`;
+        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE wallet_id LIKE '%${columns['wallet_id']}%'`;
         let result = await this.connection.sqlQuery(sql, columnValues)
     }
 
@@ -34,7 +34,7 @@ export class CollectionRepository {
         let result = await this.connection.sqlQuery(
             `SELECT *
             FROM collections
-            WHERE wallet_id = ${wallet_id}::varchar`);
+            WHERE wallet_id LIKE '%${wallet_id}%'`);
 
         return <Collection>result;
     }

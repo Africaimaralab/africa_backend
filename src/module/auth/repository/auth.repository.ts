@@ -16,7 +16,7 @@ export class AuthRepository {
    }
 
    async findUser(wallet_id: string): Promise<User> {
-      let user: User = <User> await this.connection.sqlQuery(`SELECT * FROM users WHERE wallet_id = '${wallet_id}'`);
+      let user: User = <User> await this.connection.sqlQuery(`SELECT * FROM users WHERE wallet_id LIKE '%${wallet_id}%'`);
       if (!user) {
          throw new Error("User is not found!")
       } else {
