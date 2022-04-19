@@ -1,6 +1,6 @@
 CREATE TABLE "users" (
     id SERIAL PRIMARY KEY,
-    wallet_id integer NOT NULL,
+    wallet_id varchar NOT NULL UNIQUE,
     profile_picture bytea,
     country varchar,
     document_type varchar,
@@ -8,5 +8,6 @@ CREATE TABLE "users" (
     name varchar,
     surname varchar,
     patronymic_name varchar,
+    descryption text,
     created_at timestamp(0) DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,10 +1,10 @@
 import { Command } from '../../../contract/command.contract';
 import { Request } from 'express';
 import authMiddleware from '../../common/middlewares/auth-middleware';
-import { Profile } from '../dto/profile.dto';
-import { profileRepository } from '../repository/profile.repository';
+import { Collection } from '../dto/collection.dto';
+import { collectionRepository } from '../repository/collection.repository';
 
-export class GetProfileCommand extends Command {
+export class GetCollectionCommand extends Command {
     constructor() {
         super();
     }
@@ -13,7 +13,7 @@ export class GetProfileCommand extends Command {
         try {
 
             let user = await authMiddleware(req);
-            return await profileRepository.getProfile(user.wallet_id);
+            return await collectionRepository.getCollections(user.wallet_id);
 
         } catch (err) {
             console.log(err);

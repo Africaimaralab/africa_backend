@@ -8,4 +8,5 @@ export interface Profile {
     name?: string;
     surname?: string;
     patronymic_name?: string;
+    description?: string
 }
