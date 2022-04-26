@@ -3,7 +3,7 @@ CREATE TABLE "items" (
     address varchar,
     name varchar,
     description text,
-    image bytea,
+    image varchar,
     collection integer,
     tags varchar,
     price integer,
