@@ -1,15 +1,16 @@
 import { Command } from '../../../contract/command.contract';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import authMiddleware from '../../common/middlewares/auth-middleware';
 import { Item } from '../dto/item.dto';
 import { itemRepository } from '../repository/item.repository';
+import { ApiError } from '../../common/services/api-error.service';
 
 export class GetItemByIdCommand extends Command {
     constructor() {
         super();
     }
 
-    async run(req: Request): Promise<any> {
+    async run(req: Request, res: Response): Promise<any> {
         try {
 
             let user = await authMiddleware(req);
@@ -18,7 +19,7 @@ export class GetItemByIdCommand extends Command {
 
         } catch (err) {
             console.log(err);
-            return "Error";
+            return ApiError.UnknownError("Error while get item", err, res);
         }
     }
 }

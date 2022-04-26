@@ -10,7 +10,7 @@ export class CollectionRepository {
 
     async insertCollectionAndGetId(collection: Collection) {
         return await this.connection.insertAndGetID("collections", {
-           wallet_id: collection.wallet_id,
+           walletId: collection.walletId,
            name: collection.name,
            description: collection.description
         })!
@@ -23,7 +23,7 @@ export class CollectionRepository {
         const valuesPlaceholder = columnValues.map((_, i: number) => `$${i + 1}`).join(', ');
         const columnNames = Object.keys(columns).map((columnName: string) => `${columnName}`).join(', ');
 
-        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE wallet_id LIKE '%${columns['wallet_id']}%'`;
+        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE "walletId" LIKE '%${columns['walletId']}%'`;
         let result = await this.connection.sqlQuery(sql, columnValues)
     }
 
@@ -34,7 +34,7 @@ export class CollectionRepository {
         let result = await this.connection.sqlQuery(
             `SELECT *
             FROM collections
-            WHERE wallet_id LIKE '%${wallet_id}%'`);
+            WHERE "walletId" LIKE '%${wallet_id}%'`);
 
         return <Collection>result;
     }
@@ -47,7 +47,7 @@ export class CollectionRepository {
             FROM collections
             WHERE id = ${id}`);
 
-        return <Collection>result;
+        return <Collection>result[0];
     }
 
 }

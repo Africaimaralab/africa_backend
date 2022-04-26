@@ -30,7 +30,7 @@ export class ItemRepository {
         const valuesPlaceholder = columnValues.map((_, i: number) => `$${i + 1}`).join(', ');
         const columnNames = Object.keys(columns).map((columnName: string) => `${columnName}`).join(', ');
 
-        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE wallet_id LIKE '%${columns['wallet_id']}%'`;
+        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE "walletId" LIKE '%${columns['walletId']}%'`;
         console.log(sql)
         let result = await this.connection.sqlQuery(sql, columnValues)
     }
@@ -55,7 +55,7 @@ export class ItemRepository {
             FROM items
             WHERE id = ${id}`);
 
-        return <Item>result;
+        return <Item>result[0];
     }
 
 }
