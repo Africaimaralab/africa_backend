@@ -9,6 +9,6 @@ export interface Item {
     price: number;
     creator?: string;
     owner?: string;
-    created_at?: string
+    createdAt?: string
 }
 

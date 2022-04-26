@@ -1,25 +1,26 @@
 import { Command } from '../../../contract/command.contract';
 import { Request, Response } from 'express';
 import authMiddleware from '../../common/middlewares/auth-middleware';
-import { Collection } from '../dto/collection.dto';
-import { collectionRepository } from '../repository/collection.repository';
 import { ApiError } from '../../common/services/api-error.service';
+import { UploadFileToIPFSService } from '../services/ipfs.service';
+import { resize } from 'imagemagick';
 
-export class GetCollectionCommand extends Command {
+export class DownloadCommand extends Command {
+
     constructor() {
         super();
     }
 
     async run(req: Request, res: Response): Promise<any> {
         try {
-
             let user = await authMiddleware(req);
-            return await collectionRepository.getCollections(user.walletId);
-
+            const uploadService = new UploadFileToIPFSService();
+            let hash: any = req.query.hash;
+            return await uploadService.downloadContent(hash)
         } catch (err) {
-            console.log(err);
+            console.log(err)
             return ApiError.UnknownError("Error while download image from ipfs", err, res);
         }
+
     }
 }
-

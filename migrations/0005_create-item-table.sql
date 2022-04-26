@@ -9,7 +9,7 @@ CREATE TABLE "items" (
     price integer,
     creator varchar,
     owner varchar,
-    created_at timestamp(0) DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" timestamp(0) DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (collection) REFERENCES "collections" (id) ON DELETE CASCADE
 );
 

@@ -1,13 +1,14 @@
 CREATE TABLE "users" (
     id SERIAL PRIMARY KEY,
-    wallet_id varchar NOT NULL UNIQUE,
-    profile_picture bytea,
+    "walletId" varchar NOT NULL UNIQUE,
+    "profilePicture" varchar,
     country varchar,
-    document_type varchar,
-    passport_number varchar,
+    "documentType" varchar,
+    "passportNumber" varchar,
     name varchar,
     surname varchar,
-    patronymic_name varchar,
-    descryption text,
-    created_at timestamp(0) DEFAULT CURRENT_TIMESTAMP
+    "patronymicName" varchar,
+    "description" varchar,
+     completed boolean,
+    "createdAt" timestamp(0) DEFAULT CURRENT_TIMESTAMP
 );

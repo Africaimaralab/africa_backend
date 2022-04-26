@@ -6,7 +6,6 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import { globals } from './config/globals';
 import errorMiddleware from './module/common/middlewares/error-middleware';
-
 declare module 'express-serve-static-core' {
     interface Request {
       storage?: Map<any, any>
@@ -34,7 +33,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 app.use((req: Request, res: Response) => {
     res.status(404);
-    res.json({ error: 'Not found'});
+    res.json({ status: 404, errorMessage: 'Not found'});
 });
 
 app.listen(globals.APP_PORT, () => {

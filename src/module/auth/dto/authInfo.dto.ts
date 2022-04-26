@@ -1,3 +1,3 @@
 export interface AuthInfoDto {
-    wallet_id: string;
+    walletId: string;
 }

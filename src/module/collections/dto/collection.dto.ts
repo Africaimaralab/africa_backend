@@ -1,8 +1,8 @@
 export interface Collection {
     id?: number;
-    wallet_id: string;
+    walletId: string;
     name?: string;
     description?: string;
-    created_at?: string
+    createdAt?: string
 }
 

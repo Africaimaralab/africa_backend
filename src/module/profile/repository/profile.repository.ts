@@ -9,16 +9,38 @@ export class ProfileRepository {
     }
 
     async updateProfile(profile: Profile) {
-        let id = (await this.updateTable("users", profile));
+        await this.updateTable("users", profile);
+        let newProfileData = <Profile>await this.getProfile(profile.walletId);
+        if(newProfileData.completed == true)
+            for (let key in newProfileData) {
+                if (newProfileData[key] == null || newProfileData[key] == "")  {
+                    if(newProfileData.completed == true) {
+                        await this.updateCompletedColumn(profile.walletId, false);
+                    }
+                    return;
+                }
+            }
+
+            await this.updateCompletedColumn(profile.walletId, true);
     }
+
+
+
+    async updateCompletedColumn(wallet_id: string, completed: boolean) {
+        await this.connection.sqlQuery(
+           `UPDATE users
+            SET completed = '${completed}'
+            WHERE "walletId" LIKE '%${wallet_id}%'`);
+     }
+
 
 
     async updateTable(tableName: string, columns: object) {
         const columnValues = Object.values(columns);
         const valuesPlaceholder = columnValues.map((_, i: number) => `$${i + 1}`).join(', ');
-        const columnNames = Object.keys(columns).map((columnName: string) => `${columnName}`).join(', ');
+        const columnNames = Object.keys(columns).map((columnName: string) => `"${columnName}"`).join(', ');
 
-        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE wallet_id LIKE '%${columns['wallet_id']}%'`;
+        const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE "walletId" LIKE '%${columns['walletId']}%'`;
         let result = await this.connection.sqlQuery(sql, columnValues)
     }
 
@@ -26,14 +48,22 @@ export class ProfileRepository {
 
     async getProfile(wallet_id: string): Promise<Profile> {
 
-
-        console.log(wallet_id);
         let result = await this.connection.sqlQuery(
             `SELECT *
             FROM users
-            WHERE wallet_id LIKE '%${wallet_id}%'`);
+            WHERE "walletId" LIKE '%${wallet_id}%'`);
+        return <Profile>result[0];
+    }
 
-        return <Profile>result;
+
+    async getCompletedProfiles(wallet_id: string): Promise<Profile[]> {
+
+        let result = await this.connection.sqlQuery(
+            `SELECT "walletId", name, surname, "profilePicture"
+            FROM   users
+            WHERE completed is true
+            AND "walletId" NOT LIKE '%${wallet_id}%'`);
+        return <Profile[]>result;
     }
 
 }

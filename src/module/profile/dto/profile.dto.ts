@@ -1,12 +1,13 @@
 export interface Profile {
     id?: number;
-    wallet_id: string;
-    profile_picture?: string;
+    walletId: string;
+    profilePicture?: string;
     country?: string;
-    document_type?: string;
-    passport_number?: string;
+    documentType?: string;
+    passportNumber?: string;
     name?: string;
     surname?: string;
-    patronymic_name?: string;
-    description?: string
+    patronymicName?: string;
+    description?: string;
+    completed?: boolean;
 }

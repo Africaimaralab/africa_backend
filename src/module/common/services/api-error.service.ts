@@ -1,18 +1,40 @@
-export class ApiError extends Error {
-    status;
-    errors;
 
-    constructor(status: number, message: string | undefined, errors = []) {
-        super(message);
-        this.status = status;
-        this.errors = errors;
+import { ErrorDTO } from '../../common/dto/error.dto';
+import { Request, Response, response } from 'express';
+export class ApiError extends Error {
+    errorMessage;
+
+    constructor(message: string) {
+        super(message)
+        this.errorMessage = message;
     }
 
     static UnauthorizedError() {
-        return new ApiError(401, 'User is not authorized!')
+        throw new ApiError('User is not authorized!')
     }
 
-    static BadRequest(message, errors = []) {
-        return new ApiError(400, message, errors);
+    static BadRequest(message) {
+        throw new ApiError(message);
+    }
+
+    static UnknownError(errorMessage, err: any, res: Response) {
+        let result = <ErrorDTO>err;
+
+        if (!result.errorMessage) {
+            res.status(400);
+            const apiError: ErrorDTO = {
+                errorMessage: "Bad Request: " + errorMessage,
+                error: result.toString(),
+                description: err
+            };
+            return apiError;
+        }
+        else if (result.errorMessage == "User is not authorized!") {
+            res.status(401);
+        }
+
+        return err;
     }
 }
+
+
