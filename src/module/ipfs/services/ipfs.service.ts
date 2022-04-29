@@ -27,7 +27,7 @@ export class UploadFileToIPFSService {
 
 
 
-    async downloadContent(hash: string) {
+    async downloadContent(hash: string, check: boolean) {
         let file = fs.createWriteStream(hash);
         let finish = false;
         await https.get(`https://ipfs.infura.io/ipfs/${hash}`, function (response) {
@@ -47,6 +47,10 @@ export class UploadFileToIPFSService {
             await this.sleep(1000)
 
         let buffer = fs.readFileSync(hash);
+        fs.rmSync(hash, { force: true });
+        if(!check){
+            return buffer;
+        }
         let extention = "";
         if (buffer[0] == 0x25 && buffer[1] == 0x50 && buffer[2] == 0x44 && buffer[3] == 0x46)
             extention = ".pdf";
@@ -57,12 +61,10 @@ export class UploadFileToIPFSService {
         if (buffer[0] == 0xFF && buffer[1] == 0xD8 && buffer[2] == 0xFF)
             extention = ".jpg";
         if (extention == "") {
-            fs.rmSync(hash, { force: true });
             throw ApiError.BadRequest("File extention error")
         }
         let filename = `${hash}${extention}`;
         let data = Buffer.from(buffer).toString('base64');
-        fs.rmSync(hash, { force: true });
         return { filename, data };
 
     }

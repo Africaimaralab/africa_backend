@@ -16,7 +16,7 @@ export class DownloadCommand extends Command {
             let user = await authMiddleware(req);
             const uploadService = new UploadFileToIPFSService();
             let hash: any = req.query.hash;
-            return await uploadService.downloadContent(hash)
+            return await uploadService.downloadContent(hash, true)
         } catch (err) {
             console.log(err)
             return ApiError.UnknownError("Error while download image from ipfs", err, res);

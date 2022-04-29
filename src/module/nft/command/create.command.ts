@@ -14,49 +14,50 @@ export class UploadDataCommand extends Command {
         super();
     }
 
+
+
     async run(req: Request, res: Response): Promise<any> {
         try {
             let user = await authMiddleware(req);
             const uploadService = new UploadFileToIPFSService();
             let media = Buffer.from(req.body.media, 'base64').toString('binary');
-            let previews = req.body.previews;
-            let documentType = req.body.documentType;
-   
-
-            let text = await agreementRepository.getTextByType(documentType);//generate document
-            console.log(text)
-            await GeneratePDFService.generate(text.text, documentType);
-
-
             //upload media
             fs.writeFileSync(`${globals.TEMP_DATA_PATH}/${user.walletId}`, media, 'binary');
             let cid = new CID(await uploadService.upload(`${globals.TEMP_DATA_PATH}//${user.walletId}`)).toV1().toString('base32');
-            const fileUrl = cid + ".ipfs.infura-ipfs.io";
+            const mediaUrl = cid + ".ipfs.infura-ipfs.io";
 
 
-            //upload previews
-            let previewsUrls: string[] = [];
-            for (let elem of previews) {
-                let preview = Buffer.from(elem, 'base64').toString('binary');
-                fs.writeFileSync(`${globals.TEMP_DATA_PATH}/${user.walletId}`, preview, 'binary');
-                cid = new CID(await uploadService.upload(`${globals.TEMP_DATA_PATH}//${user.walletId}`)).toV1().toString('base32');
-                previewsUrls.push(cid + ".ipfs.infura-ipfs.io")
-            }
+            let reference = { 
+                title: req.body.title, 
+                description: req.body.description, 
+                category: req.body.category,
+                price: req.body.price,
+                media: mediaUrl, 
+                typeOfMedia: req.body.typeOfMedia, 
+                sellType: req.body.sellType,
+                collection: req.body.collection, 
+                tags: req.body.tags
+            };
 
-            //create reference json and upload data
-            cid = new CID(await uploadService.upload(`${globals.TEMP_DATA_PATH}//${documentType}.pdf`)).toV1().toString('base32');
-            let documentUrl = cid + ".ipfs.infura-ipfs.io";
-            let reference = { previews: previewsUrls, documentType: documentType, document: documentUrl };
+
+
             let referenceJson = JSON.stringify(reference);
-            cid = new CID(await uploadService.uploadContent(referenceJson)).toV1().toString('base32');
+            let hash = await uploadService.uploadContent(referenceJson);
+            cid = new CID(hash).toV1().toString('base32');
             let referenceUrl = cid + ".ipfs.infura-ipfs.io";
+            let result = await uploadService.downloadContent(hash, false)
+            result = Buffer.from(result, 'hex').toString('utf8');
+            console.log(result)
 
-            return { media: fileUrl, reference: referenceUrl };
+
+            return { description : referenceUrl };
         } catch (err) {
             console.log(err)
             return ApiError.UnknownError("Error while upload image to IPFS", err, res);
         }
     }
 }
+
+
 
 
