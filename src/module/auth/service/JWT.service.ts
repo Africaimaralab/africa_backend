@@ -8,8 +8,8 @@ const JWT_REFRESH_SECRET = "2M7LXq7JmTpB";
 class JWTService {
 
     generateTokens(payload: AuthInfoDto) {
-        const accessToken = jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: '300s' })
-        const refreshToken = jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '100000s' })
+        const accessToken = jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: '3600s' })
+        const refreshToken = jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '86400s' })
         return {
             accessToken,
             refreshToken

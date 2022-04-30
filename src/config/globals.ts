@@ -8,4 +8,5 @@ export const globals = {
     PUBLIC_ROOT: path.join(APP_ROOT, 'public'),
     BASE_PATH: process.env.BASE_PATH || '',
     TEMP_DATA_PATH: path.join(APP_ROOT, 'temp' ),
+    ABI_PATH: path.join(APP_ROOT, 'abi' ),
 };
