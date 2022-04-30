@@ -7,6 +7,7 @@ import { IPFSService } from '../../ipfs/services/ipfs.service';
 import { globals } from '../../../config/globals';
 import { agreementRepository } from '../../agreements/repository/agreement.repository';
 import GeneratePDFService from "../../agreements/service/generate.service";
+import { Mint } from '../service/mint';
 const CID = require('cids')
 
 export class UploadDataCommand extends Command {
@@ -38,17 +39,19 @@ export class UploadDataCommand extends Command {
                 collection: req.body.collection, 
                 tags: req.body.tags
             };
+            console.log("fkdfkdfkfd")
 
             let referenceJson = JSON.stringify(reference);
             let hash = await uploadService.uploadContent(referenceJson);
             cid = new CID(hash).toV1().toString('base32');
             let referenceUrl = cid + ".ipfs.infura-ipfs.io";
-            let result = await uploadService.downloadContent(hash, false)
-            result = Buffer.from(result, 'hex').toString('utf8');
-            console.log(result)
+            const mintService = new Mint();
+            console.log("минтинг")
+            let address = mintService.minting(referenceUrl);
+            
 
 
-            return { description : referenceUrl };
+            return { address : address };
         } catch (err) {
             console.log(err)
             return ApiError.UnknownError("Error while upload image to IPFS", err, res);
