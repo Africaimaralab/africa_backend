@@ -3,6 +3,7 @@ import { Module } from '../../contract/module.contract';
 import { CreateItemCommand } from './command/create_item.command';
 import { GetItemByIdCommand } from './command/get_item_by_id.command';
 import { GetItemsByWalletCommand } from './command/get_items_by_wallet.command';
+import { GetItemsCommand } from './command/get_items.command ';
 
 export class ItemModule implements Module {
     basePath = '/items';
@@ -22,7 +23,16 @@ export class ItemModule implements Module {
             method: method.GET,
             path: '/get_items_by_wallet',
             command: GetItemsByWalletCommand,
+        },
+        {
+            method: method.GET,
+            path: '/get_items',
+            command: GetItemsCommand,
         }
+
+
+
+
 
     ];
 }
