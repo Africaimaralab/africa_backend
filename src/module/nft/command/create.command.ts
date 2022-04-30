@@ -7,6 +7,7 @@ import { IPFSService } from '../../ipfs/services/ipfs.service';
 import { globals } from '../../../config/globals';
 import { agreementRepository } from '../../agreements/repository/agreement.repository';
 import GeneratePDFService from "../../agreements/service/generate.service";
+import { MintService } from '../service/mint.service';
 const CID = require('cids')
 
 export class UploadDataCommand extends Command {
@@ -26,7 +27,6 @@ export class UploadDataCommand extends Command {
             let cid = new CID(await uploadService.upload(`${globals.TEMP_DATA_PATH}//${user.walletId}`)).toV1().toString('base32');
             const mediaUrl = cid + ".ipfs.infura-ipfs.io";
 
-
             let reference = { 
                 title: req.body.title, 
                 description: req.body.description, 
@@ -38,17 +38,18 @@ export class UploadDataCommand extends Command {
                 collection: req.body.collection, 
                 tags: req.body.tags
             };
+            let addrToTransfer = req.body.addrToTransfer;
+
 
             let referenceJson = JSON.stringify(reference);
             let hash = await uploadService.uploadContent(referenceJson);
             cid = new CID(hash).toV1().toString('base32');
             let referenceUrl = cid + ".ipfs.infura-ipfs.io";
-            let result = await uploadService.downloadContent(hash, false)
-            result = Buffer.from(result, 'hex').toString('utf8');
-            console.log(result)
+            const mintService = new MintService();
 
+            let address = await mintService.minting(referenceUrl, addrToTransfer);
 
-            return { description : referenceUrl };
+            return { address : address };
         } catch (err) {
             console.log(err)
             return ApiError.UnknownError("Error while upload image to IPFS", err, res);

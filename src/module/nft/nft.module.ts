@@ -8,7 +8,7 @@ export class NftModule implements Module {
     routes: Route[] = [
         {
             method: method.POST,
-            path: '/upload_data',
+            path: '/mint',
             command: UploadDataCommand,
         },
     ];
