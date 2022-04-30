@@ -36,26 +36,13 @@ export const tables = {
     TEXT: "text",
     DESCRIPTION: "description"
   },
-  ITEMS: {
-    TABLE_NAME: "items",
-    ID: "id",
-    ADDRESS: "address",
-    NAME: "name",
-    DESCRYPTION: "descryption",
-    IMAGE: "image",
-    COLLECTION: "collection",
-    TAGS: "tags",
-    PRICE: "price",
-    CREATOR: "creator",
-    OWNER: "owner",
-    CREATED_AT: "createdAt",
-  },
   COLLECTIONS: {
     TABLE_NAME: "collectionss",
     ID: "id",
     WALLET_ID: "walletId",
     NAME: "name",
     DESCRIPTION: "description",
+    PICTURE: "picture",
     CREATE_AT: "createdAt",
   }
 
