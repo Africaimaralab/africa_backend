@@ -9,6 +9,24 @@ export interface Item {
     price: number;
     creator?: string;
     owner?: string;
-    createdAt?: string
+    createdAt?: string;
+}
+
+
+export interface ItemDTO {
+    id?: number;
+    address: string;
+    name: string;
+    description: string;
+    image: string;
+    collection: string;
+    tags: string;
+    price: number;
+    creator?: string;
+    owner?: string;
+    createdAt?: string;
+    typeOfMedia?: string;
+    typeCell?: string;
+
 }
 

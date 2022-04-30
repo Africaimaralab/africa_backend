@@ -13,6 +13,11 @@ import {
   signerNone,
   abiContract,
 } from "@tonclient/core"
+import { IPFSService } from '../../ipfs/services/ipfs.service';
+import { ItemDTO } from '../dto/item.dto';
+var fetch = require('node-fetch');
+
+var fetch = require('node-fetch');
 
 TonClient.useBinaryLibrary(libNode); 
 export class GetTokensList {
@@ -24,16 +29,18 @@ export class GetTokensList {
           credentials: 'include',
           mode: 'cors',
         })
-      
-        const query = `{ accounts( filter: { code_hash: { eq: "5fed879a1f60253e0538aba276787146ec85f29c925a0ab824b0e9e2b6090b3d" } } ) { id } }`
-        const data = await graphQLClient.request(query)
+      //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
+        const query = `{ accounts( filter: { code_hash: { eq: "fe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8" } } ) { id } }`
+        const data = await graphQLClient.request(query);
         let items = data.accounts;
+        let itemsInfo: ItemDTO[] = [];
         for (let index = 0; index < items.length; ++index) {
                 let res = await this.runLocalGetAddrData(items[index].id)
-                let link = await this.runLocalGetLink(res)
-                link = Buffer.from(link, 'hex').toString('utf8');
-                console.log(link)
+                let item = await this.runLocalGetLink(res)
+                itemsInfo.push(item);
+
         }
+        return itemsInfo;
      }
 
     async runLocalGetAddrData(address: string): Promise<string> {
@@ -59,7 +66,8 @@ export class GetTokensList {
         
     }
 
-    async runLocalGetLink(address: string): Promise<string> {
+    // async runLocalGetLink(address: string): Promise<ItemDTO> {
+        async runLocalGetLink(address: string){
         const client = new TonClient({
           network: {
             endpoints: ['net.ton.dev']
@@ -75,9 +83,26 @@ export class GetTokensList {
             address:address,
             client}
           );
-        const name = await(tip3create.runLocal("getInfo",{}).catch(e => console.log("ERROR:", e)))
-        console.log(name)
-        let res = name?.decoded?.output?.descriprion
-        return res
+        const tokenInfo = await(tip3create.runLocal("getInfo",{}).catch(e => console.log("ERROR:", e)))
+    
+        let res = tokenInfo?.decoded?.output?.descriprion
+        let link = Buffer.from(res, 'hex').toString('utf8');
+        let data;
+      
+
+        await fetch("https://" + link)
+                .then(res => res.text())
+                .then(text => data = text)
+
+
+        let item: ItemDTO = JSON.parse(data);
+        item.address = address;
+        item.owner = tokenInfo?.decoded?.output?.addrOwner;
+        item.creator = tokenInfo?.decoded?.output?.addrAuthor;
+        item.createdAt = tokenInfo?.decoded?.output?.createdAt;
+
+
+
+        return item;
     }
 }

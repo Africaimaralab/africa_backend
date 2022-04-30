@@ -3,7 +3,7 @@ import e, { Request, Response } from 'express';
 import authMiddleware from '../../common/middlewares/auth-middleware';
 import { ApiError } from '../../common/services/api-error.service';
 import fs from 'fs';
-import { UploadFileToIPFSService } from '../../ipfs/services/ipfs.service';
+import { IPFSService } from '../../ipfs/services/ipfs.service';
 import { globals } from '../../../config/globals';
 import { agreementRepository } from '../../agreements/repository/agreement.repository';
 import GeneratePDFService from "../../agreements/service/generate.service";
@@ -19,7 +19,7 @@ export class UploadDataCommand extends Command {
     async run(req: Request, res: Response): Promise<any> {
         try {
             let user = await authMiddleware(req);
-            const uploadService = new UploadFileToIPFSService();
+            const uploadService = new IPFSService();
             let media = Buffer.from(req.body.media, 'base64').toString('binary');
             //upload media
             fs.writeFileSync(`${globals.TEMP_DATA_PATH}/${user.walletId}`, media, 'binary');
@@ -38,8 +38,6 @@ export class UploadDataCommand extends Command {
                 collection: req.body.collection, 
                 tags: req.body.tags
             };
-
-
 
             let referenceJson = JSON.stringify(reference);
             let hash = await uploadService.uploadContent(referenceJson);

@@ -4,7 +4,7 @@ const https = require('https')
 const fs = require('fs');
 import { ApiError } from '../../common/services/api-error.service';
 import { globals } from '../../../config/globals';
-export class UploadFileToIPFSService {
+export class IPFSService {
     private ipfsClient = create('https://ipfs.infura.io:5001/api/v0');
 
     /**
@@ -68,6 +68,33 @@ export class UploadFileToIPFSService {
         return { filename, data };
 
     }
+
+
+    async download(link: string) {
+        let filename = link.split('.')[0];///"tempFile";
+        let file = fs.createWriteStream(filename);
+        let finish = false;
+        await https.get(`${link}`, function (response) {
+            response.pipe(file);
+            file.on('finish', function () {
+                file.close();
+                finish = true;
+            });
+        }).on('error', function (err) {
+            fs.rmSync(filename, { force: true });
+            console.log(err);
+            finish = true;
+            throw ApiError.BadRequest("Get file from url error")
+        });
+
+        while (finish == false)
+            await this.sleep(1000)
+
+        let buffer = fs.readFileSync(filename);
+        fs.rmSync(filename, { force: true });
+        return buffer;
+    }
+
     
     sleep(ms) {
         return new Promise((resolve) => {
