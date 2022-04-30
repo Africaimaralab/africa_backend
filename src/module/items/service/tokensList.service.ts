@@ -22,6 +22,21 @@ var fetch = require('node-fetch');
 TonClient.useBinaryLibrary(libNode);
 export class GetTokensList {
 
+
+    async filterListByOwner(owner: string){
+
+        let items = await this.getTokensList();
+        let itemsInfo: ItemDTO[] = [];
+        for (let index = 0; index < items.length; ++index) {
+           if(items[index].owner == owner)
+           {
+                itemsInfo.push(items[index]);
+           }
+
+        }
+        return itemsInfo;
+    }
+
     async getTokensList() {
         const endpoint = 'https://net.ton.dev/graphql'
 

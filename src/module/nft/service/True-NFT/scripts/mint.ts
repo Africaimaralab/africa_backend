@@ -183,7 +183,7 @@ export class Mint {
           });
 
 
-          console.log("to:" + addrToTransfer)
+          console.log("to: " + addrToTransfer)
           await callThroughMultisig({
             client,
             smcSafeMultisigWallet: smcWallet,
