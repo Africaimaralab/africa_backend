@@ -3,6 +3,7 @@ export interface Collection {
     walletId: string;
     name?: string;
     description?: string;
+    picture?: string;
     createdAt?: string
 }
 
