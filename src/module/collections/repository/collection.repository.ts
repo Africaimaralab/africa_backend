@@ -12,7 +12,8 @@ export class CollectionRepository {
         return await this.connection.insertAndGetID("collections", {
            walletId: collection.walletId,
            name: collection.name,
-           description: collection.description
+           description: collection.description,
+           picture: collection.picture
         })!
      }
 
