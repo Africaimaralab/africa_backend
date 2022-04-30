@@ -7,11 +7,11 @@ const { exec } = require("child_process");
 import { Account } from "@tonclient/appkit"
 import { libNode } from "@tonclient/lib-node";
 import {
-  signerKeys,
-  TonClient,
-  MessageBodyType,
-  signerNone,
-  abiContract,
+    signerKeys,
+    TonClient,
+    MessageBodyType,
+    signerNone,
+    abiContract,
 } from "@tonclient/core"
 import { IPFSService } from '../../ipfs/services/ipfs.service';
 import { ItemDTO } from '../dto/item.dto';
@@ -19,80 +19,82 @@ var fetch = require('node-fetch');
 
 var fetch = require('node-fetch');
 
-TonClient.useBinaryLibrary(libNode); 
+TonClient.useBinaryLibrary(libNode);
 export class GetTokensList {
 
-     async getTokensList() {
+    async getTokensList() {
         const endpoint = 'https://net.ton.dev/graphql'
-      
+
         const graphQLClient = new GraphQLClient(endpoint, {
-          credentials: 'include',
-          mode: 'cors',
+            credentials: 'include',
+            mode: 'cors',
         })
-      //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
+        //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
         const query = `{ accounts( filter: { code_hash: { eq: "fe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8" } } ) { id } }`
         const data = await graphQLClient.request(query);
         let items = data.accounts;
         let itemsInfo: ItemDTO[] = [];
         for (let index = 0; index < items.length; ++index) {
-                let res = await this.runLocalGetAddrData(items[index].id)
-                let item = await this.runLocalGetLink(res)
-                itemsInfo.push(item);
+            let res = await this.runLocalGetAddrData(items[index].id)
+            let item = await this.runLocalGetLink(res)
+            itemsInfo.push(item);
 
         }
         return itemsInfo;
-     }
+    }
 
     async runLocalGetAddrData(address: string): Promise<string> {
         const client = new TonClient({
-          network: {
-            endpoints: ['net.ton.dev']
-          }
+            network: {
+                endpoints: ['net.ton.dev']
+            }
         });
         const TokenRootLabs = {
-          abi: JSON.parse(fs.readFileSync(globals.ABI_PATH + "\\Index.abi.json").toString()),
-          tvc: fs.readFileSync(globals.ABI_PATH + "\\Index.tvc").toString("base64")
+            abi: JSON.parse(fs.readFileSync(path.join(globals.ABI_PATH, "Index.abi.json")).toString()),
+            tvc: fs.readFileSync(path.join(globals.ABI_PATH, "Index.tvc")).toString("base64")
         }
         const tip3create = new Account(
-        TokenRootLabs,
-          {
-            address:address,
-            client}
-          );
-        const name = await(tip3create.runLocal("getInfo",{}).catch(e => console.log("ERROR:", e)))
-        
+            TokenRootLabs,
+            {
+                address: address,
+                client
+            }
+        );
+        const name = await (tip3create.runLocal("getInfo", {}).catch(e => console.log("ERROR:", e)))
+
         let res = name?.decoded?.output?.addrData;
         return res;
-        
+
     }
 
     // async runLocalGetLink(address: string): Promise<ItemDTO> {
-        async runLocalGetLink(address: string){
+    async runLocalGetLink(address: string) {
         const client = new TonClient({
-          network: {
-            endpoints: ['net.ton.dev']
-          }
+            network: {
+                endpoints: ['net.ton.dev']
+            }
         });
         const TokenRootLabs = {
-          abi: JSON.parse(fs.readFileSync(globals.ABI_PATH + "\\Data.abi.json").toString()),
-          tvc: fs.readFileSync(globals.ABI_PATH + "\\Data.tvc").toString("base64")
+            abi: JSON.parse(fs.readFileSync(path.join(globals.ABI_PATH, "Data.abi.json")).toString()),
+            tvc: fs.readFileSync(path.join(globals.ABI_PATH, "Data.tvc")).toString("base64")
         }
         const tip3create = new Account(
-        TokenRootLabs,
-          {
-            address:address,
-            client}
-          );
-        const tokenInfo = await(tip3create.runLocal("getInfo",{}).catch(e => console.log("ERROR:", e)))
-    
+            TokenRootLabs,
+            {
+                address: address,
+                client
+            }
+        );
+        const tokenInfo = await (tip3create.runLocal("getInfo", {}).catch(e => console.log("ERROR:", e)))
+
         let res = tokenInfo?.decoded?.output?.descriprion
         let link = Buffer.from(res, 'hex').toString('utf8');
         let data;
-      
+
 
         await fetch("https://" + link)
-                .then(res => res.text())
-                .then(text => data = text)
+            .then(res => res.text())
+            .then(text => data = text)
 
 
         let item: ItemDTO = JSON.parse(data);

@@ -2,7 +2,6 @@ import { Command } from '../../../contract/command.contract';
 import { Request, Response } from 'express';
 import authMiddleware from '../../common/middlewares/auth-middleware';
 import { Item } from '../dto/item.dto';
-import { itemRepository } from '../repository/item.repository';
 import { ApiError } from '../../common/services/api-error.service';
 import { GetTokensList } from '../service/tokensList.service';
 
