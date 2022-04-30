@@ -9,9 +9,7 @@ export class MintService {
 
     async minting (url : string, addrToTransfer: string) {
 
-        console.log("тута1111 блять")
         const mint = new Mint();
-        // console.log("минтинг")
         let address = await mint.minting(url, addrToTransfer);
         return address;
     } 
