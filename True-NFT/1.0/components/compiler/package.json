@@ -1,7 +1,0 @@
-{
-  "name": "@ton-contracts/compiler",
-  "version": "0.0.1",
-  "main": "index.js",
-  "devDependencies": {},
-  "dependencies": {}
-}
