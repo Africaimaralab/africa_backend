@@ -45,14 +45,15 @@ export class GetTokensList {
             mode: 'cors',
         })
         //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
-        const query = `{ accounts( filter: { code_hash: { eq: "f9e527814b28ec160e75a0cb3ef9939c135ca8abc825997420a88774ad588804" } } ) { id } }`
+        const query = `{ accounts( filter: { code_hash: { eq: "c9840e421d3ee454321272e51f089fbe557f974aeca732166f194b16045d9409" } } ) { id } }`
         const data = await graphQLClient.request(query);
         let items = data.accounts;
         let itemsInfo: ItemDTO[] = [];
         for (let index = 0; index < items.length; ++index) {
 
-            let res = await this.runLocalGetAddrData(items[index].id)
-            let item = await this.runLocalGetLink(res)
+
+            //let res = await this.runLocalGetAddrData(items[index].id)
+            let item = await this.runLocalGetLink(items[index].id)
             itemsInfo.push(item);
 
         }
@@ -129,6 +130,7 @@ export class GetTokensList {
         item.creator = tokenInfo?.decoded?.output?.addrAuthor;
         item.createdAt = tokenInfo?.decoded?.output?.createdAt;
         return item;
+        
 
     }
 
