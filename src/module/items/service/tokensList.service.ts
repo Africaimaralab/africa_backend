@@ -17,8 +17,6 @@ import { IPFSService } from '../../ipfs/services/ipfs.service';
 import { ItemDTO } from '../dto/item.dto';
 var fetch = require('node-fetch');
 
-var fetch = require('node-fetch');
-
 TonClient.useBinaryLibrary(libNode);
 export class GetTokensList {
 
@@ -35,6 +33,36 @@ export class GetTokensList {
 
         }
         return itemsInfo;
+    }
+
+
+    async filterListByCollectionName(collection: string): Promise <ItemDTO[]>{
+
+        let items = await this.getTokensList();
+        let itemsInfo: ItemDTO[] = [];
+        for (let index = 0; index < items.length; ++index) {
+           if(items[index].collection == collection)
+           {
+                itemsInfo.push(items[index]);
+           }
+
+        }
+        return itemsInfo;
+    }
+
+    async lengthListByCollectionName(collection: string): Promise<number>{
+
+        let items = await this.getTokensList();
+        let itemsInfo: ItemDTO[] = [];
+        let count =0; 
+        for (let index = 0; index < items.length; ++index) {
+           if(items[index].collection == collection)
+           {
+                count++;
+           }
+
+        }
+        return count;
     }
 
     async getTokensList() {

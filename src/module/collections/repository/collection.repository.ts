@@ -30,7 +30,7 @@ export class CollectionRepository {
 
 
 
-    async getCollections(wallet_id: string): Promise<Collection> {
+    async getCollectionsByWalletId(wallet_id: string): Promise<Collection> {
 
         let result = await this.connection.sqlQuery(
             `SELECT *
@@ -40,9 +40,19 @@ export class CollectionRepository {
         return <Collection>result;
     }
 
+    async getCollections(): Promise<Collection> {
+
+        let result = await this.connection.sqlQuery(
+            `SELECT *
+            FROM collections`);
+
+        return <Collection>result;
+    }
+
 
     async getCollectionById(id: number): Promise<Collection> {
 
+        console.log(id)
         let result = await this.connection.sqlQuery(
             `SELECT *
             FROM collections
