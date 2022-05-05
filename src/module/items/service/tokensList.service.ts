@@ -45,7 +45,7 @@ export class GetTokensList {
             mode: 'cors',
         })
         //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
-        const query = `{ accounts( filter: { code_hash: { eq: "c9840e421d3ee454321272e51f089fbe557f974aeca732166f194b16045d9409" } } ) { id } }`
+        const query = `{ accounts( filter: { code_hash: { eq: "e14f29357d65c30ca9aa4f12dc50d9acef9df1bd27d6fa5dcc8dfbf13cd790dc" } } ) { id } }`
         const data = await graphQLClient.request(query);
         let items = data.accounts;
         let itemsInfo: ItemDTO[] = [];
@@ -103,6 +103,7 @@ export class GetTokensList {
             }
         );
         const tokenInfo = await (tip3create.runLocal("getInfo", {}).catch(e => console.log("ERROR:", e)))
+        console.log(tokenInfo?.decoded?.output)
 
         let res = tokenInfo?.decoded?.output?.descriprion
         let link = Buffer.from(res, 'hex').toString('utf8');

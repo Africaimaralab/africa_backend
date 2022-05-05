@@ -40,6 +40,37 @@
 			]
 		},
 		{
+			"name": "putOnAuction",
+			"inputs": [
+				{"name":"initPrice","type":"uint128"},
+				{"name":"time","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "endAuction",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "auction",
+			"inputs": [
+				{"name":"price","type":"uint128"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "stopAuction",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "removeFromSale",
 			"inputs": [
 			],
@@ -89,7 +120,13 @@
 				{"name":"size","type":"uint128"},
 				{"components":[{"name":"height","type":"uint128"},{"name":"width","type":"uint128"},{"name":"duration","type":"uint128"},{"name":"extra","type":"string"},{"name":"json","type":"string"}],"name":"meta","type":"tuple"},
 				{"name":"royalty","type":"uint128"},
-				{"name":"royaltyMin","type":"uint128"}
+				{"name":"royaltyMin","type":"uint128"},
+				{"name":"onSale","type":"bool"},
+				{"name":"price","type":"uint128"},
+				{"name":"auctionLider","type":"address"},
+				{"name":"onAuction","type":"bool"},
+				{"name":"auctionPrice","type":"uint128"},
+				{"name":"endAuctionTimestamp","type":"uint256"}
 			]
 		},
 		{
@@ -169,6 +206,10 @@
 		{"name":"_royalty","type":"uint128"},
 		{"name":"_royaltyMin","type":"uint128"},
 		{"name":"_onSale","type":"bool"},
-		{"name":"_price","type":"uint128"}
+		{"name":"_price","type":"uint128"},
+		{"name":"_auctionLider","type":"address"},
+		{"name":"_onAuction","type":"bool"},
+		{"name":"_auctionPrice","type":"uint128"},
+		{"name":"_endAuctionTimestamp","type":"uint256"}
 	]
 }
