@@ -1,6 +1,7 @@
 import { method, Route } from '../../contract/route.contract';
 import { Module } from '../../contract/module.contract';
 import { UploadDataCommand } from './command/create.command';
+import { DeployCommand } from './command/deploy.command';
 
 export class NftModule implements Module {
     basePath = '/nft';
@@ -11,5 +12,10 @@ export class NftModule implements Module {
             path: '/mint',
             command: UploadDataCommand,
         },
+        {
+            method: method.POST,
+            path: '/deploy',
+            command: DeployCommand,
+        }
     ];
 }

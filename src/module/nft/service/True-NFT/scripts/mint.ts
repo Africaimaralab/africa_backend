@@ -37,6 +37,7 @@ export class Mint {
         },
       });
 
+      
       let keys: KeyPair;
 
       keys = await client.crypto.generate_random_sign_keys();
@@ -182,8 +183,8 @@ export class Mint {
             value: 500_000_000,
           });
 
-
-          console.log("to: " + addrToTransfer)
+        console.log(`chunks: `, addrsDataChunk);
+        console.log("to: " + addrToTransfer)
           await callThroughMultisig({
             client,
             smcSafeMultisigWallet: smcWallet,
@@ -196,10 +197,6 @@ export class Mint {
             value: 1_000_000_000,
           });
         }
-
-        if (process.env.NETWORK !== "LOCAL") await sleep(60000);
-
-        console.log(`chunks: `, addrsDataChunk);
         return smcData.address;
 
       }

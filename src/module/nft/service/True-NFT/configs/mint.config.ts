@@ -1,6 +1,6 @@
 export default {
   collection:
-    "0:e274935604893a28841ca56f9c2c7164e04ec4c59401d400e85f9f8632a5d990", // collection address where to mint
+    "0:140ec03af0a4f0acaf95bfa930a99a449455011ebabb62372f3ec91922c8c838", // collection address where to mint
   // array of NFTs
   items: [
     {

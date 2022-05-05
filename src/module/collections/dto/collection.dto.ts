@@ -4,6 +4,7 @@ export interface Collection {
     name?: string;
     description?: string;
     picture?: string;
-    createdAt?: string
+    createdAt?: string;
+    totalSupply?: number;
 }
 

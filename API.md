@@ -790,6 +790,7 @@ Used to create collections.
 ```json
 {
     "walletId": "[is extracted automatically from the accessToken]",
+    "picture": "[img in base64]",
     "name": "[string]",
     "description": "[string]",
 }
@@ -800,6 +801,7 @@ Used to create collections.
 ```json
 {
     "walletId": "duck2020.testnet",
+    "picture": "KJDJKK.....KDFKKK",
     "name": "Name",
     "description": "Test collection",
 }
@@ -816,6 +818,7 @@ Used to create collections.
     "id": 3,
     "walletId": "duck2020.testnet",
     "name": "Name",
+    "picture": "KJDJKK.....KDFKKK",
     "description": "Test collection.",
     "createdAt": "2022-04-26T21:21:10.000Z"
 }
@@ -837,13 +840,86 @@ Used to create collections.
 </details>
 
 
+
 <details>
 <summary>
-Get colletions.
+Get all colletions.
+
+Used to get all colletions info.
+
+**URL** : `/collections/get_collections`
+
+**Method** : `GET`
+</summary>
+
+**Auth required** : NO
+
+**Data constraints**
+
+```json
+{
+}
+```
+
+**Data example**
+
+```json
+{
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+[
+    {
+        "id": 1,
+        "walletId": "duck2020.testnet",
+        "name": "First",
+        "picture": null,
+        "description": "Chess collection.",
+        "createdAt": "2022-04-26T21:19:24.000Z"
+    },
+    {
+        "id": 2,
+        "walletId": "duck2020.testnet",
+        "name": "Second",
+        "picture": null,
+        "description": "Small village near Chicago.",
+        "createdAt": "2022-04-26T21:19:26.000Z"
+    }
+]
+```
+
+## Error Response
+
+**Condition** : -
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+
+}
+```
+</details>
+
+
+
+
+<details>
+<summary>
+Get colletions by walletId.
 
 Used to get colletions by walletId.
 
-**URL** : `/collections/get_collections`
+**URL** : `/collections/get_collections_by_wallet`
 
 **Method** : `GET`
 </summary>
@@ -878,6 +954,7 @@ Used to get colletions by walletId.
         "id": 1,
         "walletId": "duck2020.testnet",
         "name": "First",
+        "picture": null,
         "description": "Chess collection.",
         "createdAt": "2022-04-26T21:19:24.000Z"
     },
@@ -885,6 +962,7 @@ Used to get colletions by walletId.
         "id": 2,
         "walletId": "duck2020.testnet",
         "name": "Second",
+        "picture": null,
         "description": "Small village near Chicago.",
         "createdAt": "2022-04-26T21:19:26.000Z"
     }
@@ -905,6 +983,144 @@ Used to get colletions by walletId.
 }
 ```
 </details>
+
+
+
+
+<details>
+<summary>
+Get colletions by id.
+
+Used to get colletion info by id.
+
+**URL** : `/collections/get_collection_by_id`
+
+**Method** : `GET`
+</summary>
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+    "id": "[number]",
+}
+```
+
+**Data example**
+
+```json
+{
+    "id": "1",
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "collection": {
+        "id": 1,
+        "walletId": "duck2020.testnet1212332",
+        "name": "",
+        "description": null,
+        "picture": null,
+        "createdAt": "2022-04-30T13:41:45.000Z"
+    },
+    "collectionTokens": 0
+}
+
+```
+
+## Error Response
+
+**Condition** : -
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+
+}
+```
+</details>
+
+
+
+<details>
+<summary>
+Get colletion tokens by collection id.
+
+Used to get colletion tokens by collection id.
+
+**URL** : `/collections/get_collection_tokens_by_id`
+
+**Method** : `GET`
+</summary>
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+    "id": "[number]",
+}
+```
+
+**Data example**
+
+```json
+{
+    "id": "1",
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+[
+    {
+        "title": "CONTROL TEST",
+        "description": "test",
+        "price": "10",
+        "media": "bafybeig66lnkx2fx4hdrxvcrfl76f2hwcfwyr4voqdbbh3duvs6lda47ma.ipfs.infura-ipfs.io",
+        "collection": "Test",
+        "address": "0:3213540b6c5baa579dc21d6d436be84468201146a5992edcfccb1df50a3452f4",
+        "owner": "0:decc4291fcb1f4818413f6de58ffa5e44a222bf32a2fa56f04dc34e959f47948",
+        "creator": "0:0eb093156b485497001f06cf5332861b34f306963c2476af5f433fe7050da0a0",
+        "createdAt": "1651671222"
+    }
+]
+
+```
+
+## Error Response
+
+**Condition** : -
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+
+}
+```
+</details>
+
 
 
 ## Items

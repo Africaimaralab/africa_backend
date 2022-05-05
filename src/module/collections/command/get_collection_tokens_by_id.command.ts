@@ -6,7 +6,7 @@ import { collectionRepository } from '../repository/collection.repository';
 import { ApiError } from '../../common/services/api-error.service';
 import { GetTokensList } from '../../items/service/tokensList.service';
 
-export class GetCollectionsCommand extends Command {
+export class GetCollectionTokensByIdCommand extends Command {
     constructor() {
         super();
     }
@@ -15,7 +15,12 @@ export class GetCollectionsCommand extends Command {
         try {
 
             let user = await authMiddleware(req);
-            return await collectionRepository.getCollections();
+            let id: any = req.query.id;
+            let res = await collectionRepository.getCollectionById(id);
+            const tokensListGetter = new GetTokensList();
+            let name: string =<string> res.name;
+            let collectionTokens  = await tokensListGetter.filterListByCollectionName(name);
+            return {collectionTokens}
 
         } catch (err) {
             console.log(err);

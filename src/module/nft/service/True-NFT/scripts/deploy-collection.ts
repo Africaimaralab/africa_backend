@@ -14,7 +14,9 @@ import {
 import { TonPackage } from "@rsquad/ton-utils/dist/ton-contract";
 import config from "../configs/deploy-collection.config";
 
-(async () => {
+export class Deploy {
+      async deploy()
+      {
   try {
 
     const client: TonClient = createClient();
@@ -102,9 +104,10 @@ import config from "../configs/deploy-collection.config";
       name: hexToUtf8(info.name),
       descriprion: hexToUtf8(info.descriprion),
     });
-    process.exit();
+ 
   } catch (err) {
     console.log("Error! ", err);
-    process.exit();
+
   }
-})();
+};
+}
