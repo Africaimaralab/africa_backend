@@ -73,7 +73,7 @@ export class GetTokensList {
             mode: 'cors',
         })
         //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
-        const query = `{ accounts( filter: { code_hash: { eq: "e14f29357d65c30ca9aa4f12dc50d9acef9df1bd27d6fa5dcc8dfbf13cd790dc" } } ) { id } }`
+        const query = `{ accounts( filter: { code_hash: { eq: "4043d92008fb04c8e5059d92fff887e9070b0dbf258268f2eb0b114a87e506e6" } } ) { id } }`
         const data = await graphQLClient.request(query);
         let items = data.accounts;
         let itemsInfo: ItemDTO[] = [];
@@ -146,18 +146,30 @@ export class GetTokensList {
 
         let item: ItemDTO = JSON.parse(data);
         item.address = address;
+        item.price = tokenInfo?.decoded?.output?.price;
         item.owner = tokenInfo?.decoded?.output?.addrOwner;
         item.creator = tokenInfo?.decoded?.output?.addrAuthor;
         item.createdAt = tokenInfo?.decoded?.output?.createdAt;
+        item.auctionLider = tokenInfo?.decoded?.output?.auctionLider;
+        item.auctionPrice = tokenInfo?.decoded?.output?.auctionPrice;
+        item.onAuction = tokenInfo?.decoded?.output?.onAuction;
+        item.onSale = tokenInfo?.decoded?.output?.onSale;
+        item.endAuctionTimestamp = tokenInfo?.decoded?.output?.endAuctionTimestamp;
         return item;
     }
     catch
     {
         let item: ItemDTO = JSON.parse("{}");
         item.address = address;
+        item.price = tokenInfo?.decoded?.output?.price;
         item.owner = tokenInfo?.decoded?.output?.addrOwner;
         item.creator = tokenInfo?.decoded?.output?.addrAuthor;
         item.createdAt = tokenInfo?.decoded?.output?.createdAt;
+        item.auctionLider = tokenInfo?.decoded?.output?.auctionLider;
+        item.auctionPrice = tokenInfo?.decoded?.output?.auctionPrice;
+        item.onAuction = tokenInfo?.decoded?.output?.onAuction;
+        item.onSale = tokenInfo?.decoded?.output?.onSale;
+        item.endAuctionTimestamp = tokenInfo?.decoded?.output?.endAuctionTimestamp;
         return item;
         
 
