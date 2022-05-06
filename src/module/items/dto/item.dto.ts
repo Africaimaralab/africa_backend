@@ -24,6 +24,12 @@ export interface ItemDTO {
     price: number;
     creator?: string;
     owner?: string;
+    auctionLider?: string;
+    auctionPrice?: string;
+    onSale?: boolean;
+    onAuction?: boolean;
+    endAuctionTimestamp?: string;
+
     createdAt?: string;
     typeOfMedia?: string;
     typeCell?: string;
