@@ -154,7 +154,7 @@ export class GetTokensList {
         item.auctionPrice = tokenInfo?.decoded?.output?.auctionPrice;
         item.onAuction = tokenInfo?.decoded?.output?.onAuction;
         item.onSale = tokenInfo?.decoded?.output?.onSale;
-        item.endAuctionTimestamp = tokenInfo?.decoded?.output?.endAuctionTimestamp;
+        item.endAuctionTimestamp = parseInt(tokenInfo?.decoded?.output?.endAuctionTimestamp, 16);
         return item;
     }
     catch
@@ -169,7 +169,7 @@ export class GetTokensList {
         item.auctionPrice = tokenInfo?.decoded?.output?.auctionPrice;
         item.onAuction = tokenInfo?.decoded?.output?.onAuction;
         item.onSale = tokenInfo?.decoded?.output?.onSale;
-        item.endAuctionTimestamp = tokenInfo?.decoded?.output?.endAuctionTimestamp;
+        item.endAuctionTimestamp = parseInt(tokenInfo?.decoded?.output?.endAuctionTimestamp, 16);
         return item;
         
 
