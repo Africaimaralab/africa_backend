@@ -28,7 +28,7 @@ export interface ItemDTO {
     auctionPrice?: string;
     onSale?: boolean;
     onAuction?: boolean;
-    endAuctionTimestamp?: string;
+    endAuctionTimestamp?: number;
 
     createdAt?: string;
     typeOfMedia?: string;
