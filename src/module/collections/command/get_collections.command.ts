@@ -14,7 +14,6 @@ export class GetCollectionsCommand extends Command {
     async run(req: Request, res: Response): Promise<any> {
         try {
 
-            let user = await authMiddleware(req);
             return await collectionRepository.getCollections();
 
         } catch (err) {
