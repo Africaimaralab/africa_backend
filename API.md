@@ -372,6 +372,78 @@ Request Headers
 </details>
 
 
+<details>
+<summary>
+Get a profile picture.
+
+Used to get a profile picture by walletId.
+
+**URL** : `/profile/get_image/`
+
+**Method** : `GET`
+</summary>
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+  "walletId": "is extracted automatically from the accessToken",
+}
+```
+
+**Data example**
+
+```json
+Request Headers
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRfaWQiOiJjMTliMDAzMzk0IiwiaWF0IjoxNjUwMzkzMzI2LCJleHAiOjE2NTAzOTUxMjZ9.7pFlmZH_4yMVM9RAkUOMBZgJFFyGRVEZ5ZM0fKyjoGM"
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+  
+ Array of completed profiles:
+
+**Content constraints**
+
+```json
+     {
+        "profilePicture": "[image in base64]"
+     }
+```
+
+**Content example**
+
+  
+```json
+  
+    {
+
+        "profilePicture": "eyJhbG....ciOiJIU"
+    }
+
+```
+  
+## Error Response
+
+**Condition** : -
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+
+}
+```
+  
+</details>
+
 ## IPFS data
 <details>
 <summary>
