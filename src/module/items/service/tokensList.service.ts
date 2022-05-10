@@ -148,7 +148,6 @@ export class GetTokensList {
         item.address = address;
         item.price = tokenInfo?.decoded?.output?.price;
         item.owner = tokenInfo?.decoded?.output?.addrOwner;
-        item.creator = tokenInfo?.decoded?.output?.addrAuthor;
         item.createdAt = tokenInfo?.decoded?.output?.createdAt;
         item.auctionLider = tokenInfo?.decoded?.output?.auctionLider;
         item.auctionPrice = tokenInfo?.decoded?.output?.auctionPrice;
@@ -163,7 +162,6 @@ export class GetTokensList {
         item.address = address;
         item.price = tokenInfo?.decoded?.output?.price;
         item.owner = tokenInfo?.decoded?.output?.addrOwner;
-        item.creator = tokenInfo?.decoded?.output?.addrAuthor;
         item.createdAt = tokenInfo?.decoded?.output?.createdAt;
         item.auctionLider = tokenInfo?.decoded?.output?.auctionLider;
         item.auctionPrice = tokenInfo?.decoded?.output?.auctionPrice;

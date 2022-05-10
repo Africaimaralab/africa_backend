@@ -31,7 +31,7 @@ export class UploadDataCommand extends Command {
                 title: req.body.title, 
                 description: req.body.description, 
                 category: req.body.category,
-                price: req.body.price,
+                creator: req.body.addrToTransfer,
                 media: mediaUrl, 
                 typeOfMedia: req.body.typeOfMedia, 
                 sellType: req.body.sellType,
