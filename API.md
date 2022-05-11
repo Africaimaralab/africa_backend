@@ -372,6 +372,78 @@ Request Headers
 </details>
 
 
+<details>
+<summary>
+Get a profile picture.
+
+Used to get a profile picture by walletId.
+
+**URL** : `/profile/get_image/`
+
+**Method** : `GET`
+</summary>
+
+**Auth required** : YES
+
+**Data constraints**
+
+```json
+{
+  "walletId": "is extracted automatically from the accessToken",
+}
+```
+
+**Data example**
+
+```json
+Request Headers
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRfaWQiOiJjMTliMDAzMzk0IiwiaWF0IjoxNjUwMzkzMzI2LCJleHAiOjE2NTAzOTUxMjZ9.7pFlmZH_4yMVM9RAkUOMBZgJFFyGRVEZ5ZM0fKyjoGM"
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+  
+ Array of completed profiles:
+
+**Content constraints**
+
+```json
+     {
+        "profilePicture": "[image in base64]"
+     }
+```
+
+**Content example**
+
+  
+```json
+  
+    {
+
+        "profilePicture": "eyJhbG....ciOiJIU"
+    }
+
+```
+  
+## Error Response
+
+**Condition** : -
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+
+}
+```
+  
+</details>
+
 ## IPFS data
 <details>
 <summary>
@@ -703,12 +775,12 @@ List of agreements:
   
 </details>
 
-## Preparation for minting
+## Minting
 <details>
 <summary>
   Used to get ips links for <code>media</code> and <code>refernce</code>
   
-**URL** : `/nft/upload_data/`
+**URL** : `/nft/mint/`
 
 **Method** : `POST`
 </summary>
@@ -719,10 +791,16 @@ List of agreements:
 
 ```json
 {
-  "media":"[img in base64]",
-  "documentType": "[string]",
-  "previews":"[array of img in base64]",
+  "title":"[string]",
+  "description": "[string]",
+  "category":"[string]",
+  "media": "[img in base64]",
+  "typeOfMedia":"[string]",
+  "sellType":"[string]",
+  "collection": "[string]",
+  "tags":"[string]",
 }
+  
 ```
 
 **Data example**
@@ -734,9 +812,14 @@ Request Headers
 }
 Request Body
 {
+  "title":"Tiger",
+  "description": "Tiger",
+  "category":"Animals",
   "media": "R0lGODlhMgA.......yAPcAAAAA",
-  "documentType": "none",
-  "previews": [ "R0lGODlh////MzP.....Mmf/MZv/M", "R0lGODlhcwBxAPU....Mmf/MZv/M" ],
+  "typeOfMedia":"",
+  "sellType":"",
+  "collection": "Test",
+  "tags":"",
 }
 ```
 
@@ -749,8 +832,7 @@ Request Body
 
 ```json
 {
-    "media": "bafybeiex62a6qqqxzdlottdaoqhpfelu2ddip45kn3upgvoxlgwi4zq3gi.ipfs.infura-ipfs.io",
-    "reference": "bafybeiau64gqulun25rc4sbdc6flb77fulw6lqv33kprqmp7oe3bzcefm4.ipfs.infura-ipfs.io"
+    "address": "0:af513d6a7d8c0bcaeb502bbcf56e204427ef4d4510458b25a42773c25012586e",
 }
 ```
 ## Error Response

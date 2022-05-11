@@ -56,6 +56,16 @@ export class ProfileRepository {
     }
 
 
+    async getProfileImage(wallet_id: string): Promise<any> {
+
+        let result = await this.connection.sqlQuery(
+            `SELECT "profilePicture"
+            FROM users
+            WHERE "walletId" LIKE '%${wallet_id}%'`);
+        return result[0];
+    }
+
+
     async getCompletedProfiles(wallet_id: string): Promise<Profile[]> {
 
         let result = await this.connection.sqlQuery(
