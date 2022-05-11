@@ -195,6 +195,8 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"_codeIndex","type":"cell"},
 		{"name":"_codeDataChunk","type":"cell"},
+		{"name":"_devProfitAddress","type":"address"},
+		{"name":"_customerProfitAddress","type":"address"},
 		{"name":"_version","type":"string"},
 		{"name":"_name","type":"string"},
 		{"name":"_descriprion","type":"string"},
