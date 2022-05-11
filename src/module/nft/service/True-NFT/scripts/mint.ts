@@ -10,7 +10,7 @@ import {
   hexToUtf8,
   utf8ToHex,
 } from "@rsquad/ton-utils/dist/convert";
-import { callThroughMultisig } from "@rsquad/ton-utils/dist/net";
+import { callThroughMultisig, sendThroughMultisig} from "@rsquad/ton-utils/dist/net";
 import config from "../configs/mint.config";
 import { sha256 } from "js-sha256";
 import * as fs from "fs";
@@ -42,6 +42,8 @@ export class Mint {
 
       keys = await client.crypto.generate_random_sign_keys();
 
+      
+
       console.log("deploy and init collection");
 
       const smcNftRoot: TonContract = new TonContract({
@@ -49,6 +51,12 @@ export class Mint {
         name: "NftRoot",
         tonPackage: pkgNftRoot,
         address: config.collection,
+      });
+
+      await sendThroughMultisig({
+        smcSafeMultisigWallet: smcWallet,
+        dest: <string> "0:9098321675efecaead91d6a8f034e7efc513a3779b4fb29797c8ffd297c23ed2",
+        value: 1_000_000_000,
       });
 
       console.log(`collection address: ${smcNftRoot.address}`);
