@@ -12,8 +12,6 @@ export class GetItemByAddressCommand extends Command {
 
     async run(req: Request, res: Response): Promise<any> {
         try {
-
-            let user = await authMiddleware(req);
             const tokensListGetter = new GetTokensList();
             let address: any= req.query.address;
             let item = await tokensListGetter.runLocalGetLink(address);
