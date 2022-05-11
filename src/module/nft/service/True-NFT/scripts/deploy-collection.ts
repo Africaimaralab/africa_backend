@@ -19,7 +19,11 @@ export class Deploy {
       {
   try {
 
-    const client: TonClient = createClient();
+    const client: TonClient = createClient([
+      "https://main2.ton.dev/",
+      "https://main3.ton.dev/",
+      "https://main4.ton.dev/",
+  ]);
 
     const smcWallet: TonContract = new TonContract({
       client,

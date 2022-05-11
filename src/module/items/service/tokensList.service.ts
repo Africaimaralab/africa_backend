@@ -66,14 +66,14 @@ export class GetTokensList {
     }
 
     async getTokensList() {
-        const endpoint = 'https://net.ton.dev/graphql'
+        const endpoint = 'https://eri01.main.everos.dev/graphql/'
 
         const graphQLClient = new GraphQLClient(endpoint, {
             credentials: 'include',
             mode: 'cors',
         })
         //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
-        const query = `{ accounts( filter: { code_hash: { eq: "4043d92008fb04c8e5059d92fff887e9070b0dbf258268f2eb0b114a87e506e6" } } ) { id } }`
+        const query = `{ accounts( filter: { code_hash: { eq: "655a0290af91322e9300fbe4cd43a2408321dafde7f6f2ea52f52e6909166823" } } ) { id } }`
         const data = await graphQLClient.request(query);
         let items = data.accounts;
         let itemsInfo: ItemDTO[] = [];
@@ -91,7 +91,11 @@ export class GetTokensList {
     async runLocalGetAddrData(address: string): Promise<string> {
         const client = new TonClient({
             network: {
-                endpoints: ['net.ton.dev']
+                endpoints: [
+                    "https://main2.ton.dev/",
+                    "https://main3.ton.dev/",
+                    "https://main4.ton.dev/",
+                ]
             }
         });
         const TokenRootLabs = {
@@ -116,7 +120,11 @@ export class GetTokensList {
     async runLocalGetLink(address: string) {
         const client = new TonClient({
             network: {
-                endpoints: ['net.ton.dev']
+                endpoints: [
+                    "https://main2.ton.dev/",
+                    "https://main3.ton.dev/",
+                    "https://main4.ton.dev/",
+                ]
             }
         });
         const TokenRootLabs = {
