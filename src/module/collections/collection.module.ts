@@ -5,6 +5,7 @@ import { GetCollectionsByWalletCommand } from './command/get_collections_by_wall
 import { GetCollectionByIdCommand } from './command/get_collection_by_id.command';
 import { GetCollectionsCommand } from './command/get_collections.command';
 import { GetCollectionTokensByIdCommand } from './command/get_collection_tokens_by_id.command';
+import { GetCollectionImageCommand } from './command/get_collection_image.command';
 
 export class CollectionModule implements Module {
     basePath = '/collections';
@@ -34,6 +35,11 @@ export class CollectionModule implements Module {
             method: method.GET,
             path: '/get_collection_tokens_by_id',
             command: GetCollectionTokensByIdCommand,
+        },
+        {
+            method: method.GET,
+            path: '/get_collection_image',
+            command: GetCollectionImageCommand
         }
     ];
 }

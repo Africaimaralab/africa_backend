@@ -51,14 +51,22 @@ export class CollectionRepository {
 
 
     async getCollectionById(id: number): Promise<Collection> {
-
-        console.log(id)
         let result = await this.connection.sqlQuery(
             `SELECT *
             FROM collections
             WHERE id = ${id}`);
 
         return <Collection>result[0];
+    }
+
+    async getCollectionImageByName(name): Promise<any> {
+        console.log(name)
+        let result = await this.connection.sqlQuery(
+            `SELECT picture
+            FROM collections
+            WHERE name = '${name}'`);
+
+        return result[0];
     }
 
 }
