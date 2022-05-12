@@ -13,7 +13,7 @@ export class GetProfileImageCommand extends Command {
     async run(req: Request, res: Response): Promise<any> {
         try {
 
-            let user = req.body.walletId;
+            let user: string = <any>req.query.walletId;
             return await profileRepository.getProfileImage(user);
         } catch (err) {
             return ApiError.UnknownError("Error while get profile", err, res);
