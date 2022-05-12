@@ -916,9 +916,19 @@ Used to create collections.
 
 ```json
 {
-
+    "errorMessage": "The collection name is not unique"
 }
 ```
+  
+  or
+
+  ```json
+{
+
+}
+  ```
+  
+  
 </details>
 
 
@@ -1202,6 +1212,66 @@ Used to get colletion tokens by collection id.
 }
 ```
 </details>
+
+
+<details>
+<summary>
+Get colletion image by collection name.
+
+
+**URL** : `/collections/get_collection_image`
+
+**Method** : `GET`
+</summary>
+
+**Auth required** : NO
+
+**Data constraints**
+
+```json
+{
+    "name": "[string]",
+}
+```
+
+**Data example**
+
+```json
+{
+    "name": "Test collection",
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+
+{
+        "picture": "kkgkfgkkfgkg.....fgklfkgfkfgkfg",
+}
+
+```
+
+## Error Response
+
+**Condition** : -
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+
+}
+```
+</details>
+
+
 
 
 
