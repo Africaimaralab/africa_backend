@@ -5,5 +5,6 @@ CREATE TABLE "collections" (
     description text,
     picture varchar,
     "createdAt" timestamp(0) DEFAULT CURRENT_TIMESTAMP,
+    "totalSupply" numeric,
     FOREIGN KEY ("walletId") REFERENCES "users" ("walletId") ON DELETE CASCADE
 );

@@ -13,7 +13,8 @@ export class CollectionRepository {
            walletId: collection.walletId,
            name: collection.name,
            description: collection.description,
-           picture: collection.picture
+           picture: collection.picture,
+           totalSupply: 0
         })!
      }
 
@@ -26,6 +27,11 @@ export class CollectionRepository {
 
         const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE "walletId" LIKE '%${columns['walletId']}%'`;
         let result = await this.connection.sqlQuery(sql, columnValues)
+    }
+
+    async updateTotalSupply(name: string) {
+
+        let result = await this.connection.sqlQuery(`UPDATE collections SET "totalSupply" = "totalSupply" + 1  WHERE name = '${name}'`);
     }
 
 
@@ -74,7 +80,7 @@ export class CollectionRepository {
         let result = await this.connection.sqlQuery(
             `SELECT COUNT(*) FROM collections
             WHERE name = '${name}'`);
-        return result;
+        return result[0];
     }
 
 
