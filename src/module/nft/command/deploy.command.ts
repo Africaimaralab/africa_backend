@@ -21,6 +21,7 @@ export class DeployCommand extends Command {
     async run(req: Request, res: Response): Promise<any> {
         try {
             let user = await authMiddleware(req);
+            return;
         
             const deploy = new Deploy();
             deploy.deploy();

@@ -5,7 +5,7 @@ import { Collection } from '../dto/collection.dto';
 import authMiddleware from '../../common/middlewares/auth-middleware';
 import { ApiError } from '../../common/services/api-error.service';
 
-export class CreateCollectionCommand extends Command {
+export class GetCollectionImageCommand extends Command {
 
     constructor() {
         super();
@@ -13,16 +13,8 @@ export class CreateCollectionCommand extends Command {
 
     async run(req: Request, res: Response): Promise<any> {
         try {
-            let user = await authMiddleware(req);
-            let collection: Collection = req.body;
-            collection.walletId = user.walletId;
-            let count = await collectionRepository.checkUnique(collection.name);
-            if (count.count !=0) {
-                return ApiError.BadRequest("The collection name is not unique")
-            }
-
-            let id: number = <number>await collectionRepository.insertCollectionAndGetId(collection);
-            return await collectionRepository.getCollectionById(id);
+            let collectionName: string = <any> req.query.name;
+            return await collectionRepository.getCollectionImageByName(collectionName);
         } catch (err) {
             console.log(err);
             return ApiError.UnknownError("Error while create collection", err, res);

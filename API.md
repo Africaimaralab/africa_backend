@@ -916,9 +916,19 @@ Used to create collections.
 
 ```json
 {
-
+    "errorMessage": "The collection name is not unique"
 }
 ```
+  
+  or
+
+  ```json
+{
+
+}
+  ```
+  
+  
 </details>
 
 
@@ -964,6 +974,7 @@ Used to get all colletions info.
         "name": "First",
         "picture": null,
         "description": "Chess collection.",
+        "totalSupply": "5",
         "createdAt": "2022-04-26T21:19:24.000Z"
     },
     {
@@ -972,6 +983,7 @@ Used to get all colletions info.
         "name": "Second",
         "picture": null,
         "description": "Small village near Chicago.",
+        "totalSupply": "4",
         "createdAt": "2022-04-26T21:19:26.000Z"
     }
 ]
@@ -1038,6 +1050,7 @@ Used to get colletions by walletId.
         "name": "First",
         "picture": null,
         "description": "Chess collection.",
+        "totalSupply": "5",
         "createdAt": "2022-04-26T21:19:24.000Z"
     },
     {
@@ -1046,6 +1059,7 @@ Used to get colletions by walletId.
         "name": "Second",
         "picture": null,
         "description": "Small village near Chicago.",
+        "totalSupply": "5",
         "createdAt": "2022-04-26T21:19:26.000Z"
     }
 ]
@@ -1112,6 +1126,7 @@ Used to get colletion info by id.
         "name": "",
         "description": null,
         "picture": null,
+        "totalSupply": "5",
         "createdAt": "2022-04-30T13:41:45.000Z"
     },
     "collectionTokens": 0
@@ -1202,6 +1217,66 @@ Used to get colletion tokens by collection id.
 }
 ```
 </details>
+
+
+<details>
+<summary>
+Get colletion image by collection name.
+
+
+**URL** : `/collections/get_collection_image`
+
+**Method** : `GET`
+</summary>
+
+**Auth required** : NO
+
+**Data constraints**
+
+```json
+{
+    "name": "[string]",
+}
+```
+
+**Data example**
+
+```json
+{
+    "name": "Test collection",
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+
+{
+        "picture": "kkgkfgkkfgkg.....fgklfkgfkfgkfg",
+}
+
+```
+
+## Error Response
+
+**Condition** : -
+
+**Code** : `400 BAD REQUEST`
+
+**Content** :
+
+```json
+{
+
+}
+```
+</details>
+
+
 
 
 
