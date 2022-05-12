@@ -51,7 +51,7 @@ export class UploadDataCommand extends Command {
             let address = await mintService.minting(referenceUrl, addrToTransfer);
             await collectionRepository.updateTotalSupply(reference.collection)
 
-            return { address : 1121 };
+            return { address : address };
         } catch (err) {
             console.log(err)
             return ApiError.UnknownError("Error while upload image to IPFS", err, res);
