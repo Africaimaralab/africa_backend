@@ -60,7 +60,6 @@ export class CollectionRepository {
     }
 
     async getCollectionImageByName(name): Promise<any> {
-        console.log(name)
         let result = await this.connection.sqlQuery(
             `SELECT picture
             FROM collections
@@ -68,6 +67,17 @@ export class CollectionRepository {
 
         return result[0];
     }
+
+
+    
+    async checkUnique(name): Promise<any> {
+        let result = await this.connection.sqlQuery(
+            `SELECT COUNT(*) FROM collections
+            WHERE name = '${name}'`);
+        return result;
+    }
+
+
 
 }
 

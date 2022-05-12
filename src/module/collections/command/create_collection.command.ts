@@ -16,7 +16,12 @@ export class CreateCollectionCommand extends Command {
             let user = await authMiddleware(req);
             let collection: Collection = req.body;
             collection.walletId = user.walletId;
-            let id: number = <number> await collectionRepository.insertCollectionAndGetId(collection);
+            let count = await collectionRepository.checkUnique(collection.name);
+            if (count) {
+                return ApiError.BadRequest("The collection name is not unique")
+            }
+
+            let id: number = <number>await collectionRepository.insertCollectionAndGetId(collection);
             return await collectionRepository.getCollectionById(id);
         } catch (err) {
             console.log(err);
