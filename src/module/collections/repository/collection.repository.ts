@@ -13,7 +13,8 @@ export class CollectionRepository {
            walletId: collection.walletId,
            name: collection.name,
            description: collection.description,
-           picture: collection.picture
+           picture: collection.picture,
+           totalSupply: 0
         })!
      }
 
@@ -26,6 +27,11 @@ export class CollectionRepository {
 
         const sql = `UPDATE "${tableName}" SET (${columnNames}) = (${valuesPlaceholder}) WHERE "walletId" LIKE '%${columns['walletId']}%'`;
         let result = await this.connection.sqlQuery(sql, columnValues)
+    }
+
+    async updateTotalSupply(name: string) {
+
+        let result = await this.connection.sqlQuery(`UPDATE collections SET "totalSupply" = "totalSupply" + 1  WHERE name = '${name}'`);
     }
 
 
@@ -51,8 +57,6 @@ export class CollectionRepository {
 
 
     async getCollectionById(id: number): Promise<Collection> {
-
-        console.log(id)
         let result = await this.connection.sqlQuery(
             `SELECT *
             FROM collections
@@ -60,6 +64,26 @@ export class CollectionRepository {
 
         return <Collection>result[0];
     }
+
+    async getCollectionImageByName(name): Promise<any> {
+        let result = await this.connection.sqlQuery(
+            `SELECT picture
+            FROM collections
+            WHERE name = '${name}'`);
+
+        return result[0];
+    }
+
+
+    
+    async checkUnique(name): Promise<any> {
+        let result = await this.connection.sqlQuery(
+            `SELECT COUNT(*) FROM collections
+            WHERE name = '${name}'`);
+        return result[0];
+    }
+
+
 
 }
 

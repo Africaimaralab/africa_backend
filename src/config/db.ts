@@ -43,6 +43,7 @@ export const tables = {
     NAME: "name",
     DESCRIPTION: "description",
     PICTURE: "picture",
+    MINTED: "number",
     CREATE_AT: "createdAt",
   }
 

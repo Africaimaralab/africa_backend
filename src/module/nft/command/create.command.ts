@@ -8,6 +8,7 @@ import { globals } from '../../../config/globals';
 import { agreementRepository } from '../../agreements/repository/agreement.repository';
 import GeneratePDFService from "../../agreements/service/generate.service";
 import { MintService } from '../service/mint.service';
+import { collectionRepository } from '../../collections/repository/collection.repository';
 const CID = require('cids')
 
 export class UploadDataCommand extends Command {
@@ -48,8 +49,9 @@ export class UploadDataCommand extends Command {
             const mintService = new MintService();
 
             let address = await mintService.minting(referenceUrl, addrToTransfer);
+            await collectionRepository.updateTotalSupply(reference.collection)
 
-            return { address : address };
+            return { address : 1121 };
         } catch (err) {
             console.log(err)
             return ApiError.UnknownError("Error while upload image to IPFS", err, res);
