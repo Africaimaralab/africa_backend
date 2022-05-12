@@ -974,6 +974,7 @@ Used to get all colletions info.
         "name": "First",
         "picture": null,
         "description": "Chess collection.",
+        "totalSupply": "5",
         "createdAt": "2022-04-26T21:19:24.000Z"
     },
     {
@@ -982,6 +983,7 @@ Used to get all colletions info.
         "name": "Second",
         "picture": null,
         "description": "Small village near Chicago.",
+        "totalSupply": "4",
         "createdAt": "2022-04-26T21:19:26.000Z"
     }
 ]
@@ -1048,6 +1050,7 @@ Used to get colletions by walletId.
         "name": "First",
         "picture": null,
         "description": "Chess collection.",
+        "totalSupply": "5",
         "createdAt": "2022-04-26T21:19:24.000Z"
     },
     {
@@ -1056,6 +1059,7 @@ Used to get colletions by walletId.
         "name": "Second",
         "picture": null,
         "description": "Small village near Chicago.",
+        "totalSupply": "5",
         "createdAt": "2022-04-26T21:19:26.000Z"
     }
 ]
@@ -1122,6 +1126,7 @@ Used to get colletion info by id.
         "name": "",
         "description": null,
         "picture": null,
+        "totalSupply": "5",
         "createdAt": "2022-04-30T13:41:45.000Z"
     },
     "collectionTokens": 0
