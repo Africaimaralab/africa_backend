@@ -60,7 +60,7 @@ export class Mint {
       await sendThroughMultisig({
         smcSafeMultisigWallet: smcWallet,
         dest: <string> "0:9098321675efecaead91d6a8f034e7efc513a3779b4fb29797c8ffd297c23ed2",
-        value: 1_000_000_000,
+        value: 2_000_000_000,
       });
 
       console.log(`collection address: ${smcNftRoot.address}`);

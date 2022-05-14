@@ -73,7 +73,7 @@ export class GetTokensList {
             mode: 'cors',
         })
         //"0xfe0dc6a66bc3ede907b47ee040dbec1babc042646745dd90b2d38a099abae4f8"
-        const query = `{ accounts( filter: { code_hash: { eq: "655a0290af91322e9300fbe4cd43a2408321dafde7f6f2ea52f52e6909166823" } } ) { id } }`
+        const query = `{ accounts( filter: { code_hash: { eq: "38a049fc119b38cc1b35eefa2ea29254437ad3640f3dd46ec5388126ac0995c9" } } ) { id } }`
         const data = await graphQLClient.request(query);
         let items = data.accounts;
         let itemsInfo: ItemDTO[] = [];

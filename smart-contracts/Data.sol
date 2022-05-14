@@ -130,8 +130,7 @@ contract Data is IData, IndexResolver, DataChunkResolver {
         if(_auctionLider != address(0)){
 
             uint128 commission =  _auctionPrice*25_000_000; // 2.5 percents
-            uint128 sent =  _auctionPrice*1_000_000_000 - 2*commission;
-            _devProfitAddress.transfer({ value: commission, flag: 0 });
+            uint128 sent =  _auctionPrice*1_000_000_000 - commission;
             _customerProfitAddress.transfer({ value: commission, flag: 0 });
             _addrOwner.transfer({ value: sent, flag: 0 });
             transferAfterBuy(_auctionLider);
@@ -192,8 +191,7 @@ contract Data is IData, IndexResolver, DataChunkResolver {
         require(_onSale == true, Errors.CONTRACT_IS_NOT_ON_SALE);
         _onSale = false;
         uint128 commission =  _price*25_000_000; // 2.5 percents
-        uint128 sent = _price*1_000_000_000 - 2*commission;
-        _devProfitAddress.transfer({ value: commission, flag: 0 });
+        uint128 sent = _price*1_000_000_000 - commission;
         _customerProfitAddress.transfer({ value: commission, flag: 0 });
         _addrOwner.transfer({value: sent, flag: 0});
         _price = 0;
