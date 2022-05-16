@@ -18,7 +18,7 @@ export class CreateCollectionCommand extends Command {
             collection.walletId = user.walletId;
             let count = await collectionRepository.checkUnique(collection.name);
             if (count.count !=0) {
-                throw ApiError.BadRequest("The collection name is not unique")
+                return ApiError.UnknownError("Error while create collection", "The collection name is not unique", res);
             }
 
             let id: number = <number>await collectionRepository.insertCollectionAndGetId(collection);
